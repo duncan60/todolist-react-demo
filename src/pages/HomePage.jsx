@@ -1,6 +1,6 @@
 import { AuthProvider } from 'contexts/AuthContext';
 import {
-	Outlet,
+  Outlet,
 } from "react-router-dom";
 const HomePage = () => {
   return (

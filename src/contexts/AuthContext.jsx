@@ -20,7 +20,6 @@ export const AuthProvider = ({children}) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [payload, setPayload] = useState(null);
 	const { pathname } = useLocation();
-
 	useEffect(() => {
 		const checkTokenIsValid = async () => {
 			const authToken = localStorage.getItem('authToken');
@@ -33,10 +32,10 @@ export const AuthProvider = ({children}) => {
 			if (result) {
 				setIsAuthenticated(true);
 				const tempPayload = jwt.decode(authToken);
-        setPayload(tempPayload);
+				setPayload(tempPayload);
 			} else {
 				setIsAuthenticated(false);
-        setPayload(null);
+				setPayload(null);
 			}
 		}
 		checkTokenIsValid();
