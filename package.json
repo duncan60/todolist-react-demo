@@ -9,7 +9,9 @@
         "axios": "^1.2.2",
         "clsx": "1.2.1",
         "json-server": "^0.17.1",
+        "jsonwebtoken": "^8.5.1",
         "react": "^18.2.0",
+        "react-app-rewired": "^2.2.1",
         "react-dom": "^18.2.0",
         "react-router": "^6.6.1",
         "react-router-dom": "^6.6.1",
@@ -19,10 +21,10 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
+        "start": "react-app-rewired start",
+        "build": "react-app-rewired build",
+        "test": "react-app-rewired test",
+        "eject": "react-app-rewired eject",
         "dev-server": "json-server --watch db.json --port 3001"
     },
     "eslintConfig": {
@@ -42,5 +44,16 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "assert": "^2.0.0",
+        "buffer": "^6.0.3",
+        "crypto-browserify": "^3.12.0",
+        "https-browserify": "^1.0.0",
+        "os-browserify": "^0.3.0",
+        "process": "^0.11.10",
+        "stream-browserify": "^3.0.0",
+        "stream-http": "^3.2.0",
+        "url": "^0.11.0"
     }
 }

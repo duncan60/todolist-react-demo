@@ -7,23 +7,24 @@ import { HomePage, LoginPage, SignUpPage, TodoPage, ErrorPage  } from './pages';
 
 const router = createBrowserRouter([
   {
-    path: "login",
-    element: <LoginPage />,
-  },
-  {
-    path: "signup",
-    element: <SignUpPage />,
-  },
-  {
-    path: "todos",
-    element: <TodoPage />,
-  },
-  {
     path: "/",
     element: <HomePage />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "signup",
+        element: <SignUpPage />,
+      },
+      {
+        path: "todos",
+        element: <TodoPage />,
+      },
+    ]
   },
-  
 ]);
 
 function App() {
