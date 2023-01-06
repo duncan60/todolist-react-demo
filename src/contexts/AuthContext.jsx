@@ -5,11 +5,11 @@ import { useLocation } from 'react-router-dom';
 
 
 const defaultAuthContext = {
-	isAuthenticated: false,
-	currentMember: null,
-	register: null,   
-	login: null,
-	logout: null,   
+  isAuthenticated: false,
+  currentMember: null,
+  register: null,   
+  login: null,
+  logout: null,   
 };
 
 const AuthContext = createContext(defaultAuthContext);
@@ -17,30 +17,30 @@ const AuthContext = createContext(defaultAuthContext);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({children}) => {
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [payload, setPayload] = useState(null);
-	const { pathname } = useLocation();
-	useEffect(() => {
-		const checkTokenIsValid = async () => {
-			const authToken = localStorage.getItem('authToken');
-			if (!authToken) {
-				setIsAuthenticated(false);
-				setPayload(null);
-				return;
-			}
-			const result = await checkPermission(authToken);
-			if (result) {
-				setIsAuthenticated(true);
-				const tempPayload = jwt.decode(authToken);
-				setPayload(tempPayload);
-			} else {
-				setIsAuthenticated(false);
-				setPayload(null);
-			}
-		}
-		checkTokenIsValid();
-	}, [pathname]);
-	return (
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [payload, setPayload] = useState(null);
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem('authToken');
+      if (!authToken) {
+        setIsAuthenticated(false);
+        setPayload(null);
+        return;
+      }
+      const result = await checkPermission(authToken);
+      if (result) {
+        setIsAuthenticated(true);
+        const tempPayload = jwt.decode(authToken);
+        setPayload(tempPayload);
+      } else {
+        setIsAuthenticated(false);
+        setPayload(null);
+      }
+    }
+    checkTokenIsValid();
+  }, [pathname]);
+  return (
     <AuthContext.Provider
       value={{
         isAuthenticated,
