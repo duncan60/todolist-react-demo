@@ -8,39 +8,26 @@ import { ACLogoIcon } from 'assets/images';
 import { AuthInput } from 'components';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { register, checkPermission } from '../api/auth';
+import { useAuth } from '../contexts/AuthContext';
 
 const SignUpPage = () => {
+  const { register, isAuthenticated } = useAuth();
+
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
-    const checkTokenIsValid = async () => {
-      const authToken = localStorage.getItem('authToken');
-      if (!authToken) {
-        return;
-      }
-      const result = await checkPermission(authToken);
-      if (result) {
-        navigate('/todos');
-      }
-    };
-    checkTokenIsValid();
-  }, [navigate]);
+    if (isAuthenticated) {
+      navigate('/todos');
+    }
+  }, [navigate, isAuthenticated]);
 
   const handleClick = async () => {
-      if (userName.length === 0) {
-        return;
-      }
-      if (password.length === 0) {
-        return;
-      }
-      if (email.length === 0) {
-        return;
-      }
-
-    const { success, authToken } = await register({
+    if (userName.length === 0 || password.length === 0 || email.length === 0) {
+      return;
+    }
+    const success = await register({
       username: userName,
       email,
       password,
@@ -48,7 +35,6 @@ const SignUpPage = () => {
 
     if (success) {
       console.log('register success');
-      localStorage.setItem('authToken', authToken);
       navigate('/todos');
       return;
     } else {

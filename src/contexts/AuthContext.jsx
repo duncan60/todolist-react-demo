@@ -6,7 +6,10 @@ import { useLocation } from 'react-router-dom';
 
 const defaultAuthContext = {
   isAuthenticated: false,
-  currentMember: null,
+  currentMember: {
+		id: '',
+    name: '',
+	},
   register: null,   
   login: null,
   logout: null,   
@@ -17,12 +20,16 @@ const AuthContext = createContext(defaultAuthContext);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({children}) => {
+	
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [payload, setPayload] = useState(null);
   const { pathname } = useLocation();
   useEffect(() => {
+		console.group();
+		console.log('AuthProvider useEffect');
     const checkTokenIsValid = async () => {
       const authToken = localStorage.getItem('authToken');
+			console.log('checkTokenIsValid', authToken);
       if (!authToken) {
         setIsAuthenticated(false);
         setPayload(null);
@@ -39,6 +46,7 @@ export const AuthProvider = ({children}) => {
       }
     }
     checkTokenIsValid();
+		console.groupEnd();
   }, [pathname]);
   return (
     <AuthContext.Provider
@@ -49,6 +57,7 @@ export const AuthProvider = ({children}) => {
           name: payload.name,
         },
         register: async (data) => {
+					console.log('AuthProvider register');
           const { success, authToken } = await register({
             username: data.username,
             email: data.email,
@@ -66,6 +75,7 @@ export const AuthProvider = ({children}) => {
           return success;
         },
         login: async (data) => {
+					console.log('AuthProvider login');
           const { success, authToken } = await login({
             username: data.username,
             password: data.password,
@@ -82,6 +92,7 @@ export const AuthProvider = ({children}) => {
           return success;
         },
         logout: () => {
+					console.log('AuthProvider logout');
           localStorage.removeItem('authToken');
           setPayload(null);
           setIsAuthenticated(false);

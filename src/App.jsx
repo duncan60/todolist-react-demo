@@ -20,6 +20,7 @@ const router = createBrowserRouter([
         element: <SignUpPage />,
       },
       {
+        index: true,
         path: "todos",
         element: <TodoPage />,
       },
