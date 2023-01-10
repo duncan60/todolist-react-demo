@@ -1,141 +1,119 @@
 import { useState, useEffect } from 'react';
-import { getTodos, createTodo, patchTodo, deleteTodo, } from "../api/todos";
 import { Footer, Header, TodoCollection, TodoInput } from 'components';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useSelector, useDispatch } from "react-redux";
+import { 
+  fetchTodos,
+  saveNewTodo,
+  selectTodoList,
+} from "../store/todosSlice";
 
 const TodoPage = () => {
-  console.log('Togos Page')
-  const { isAuthenticated, currentMember, } = useAuth();
-
+  const currentMember = {
+    name: 'test',
+  }
   const [inputValue, setInputValue] = useState('');
-  const [todos, setTodos] = useState([]);
-  const navigate = useNavigate();
+  const todos = useSelector(selectTodoList);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [navigate, isAuthenticated]);
-  
+    dispatch(fetchTodos());
+  }, [dispatch]);
+
   const handleInput = (value) => {
     setInputValue(value);
   }
 
   const handleAddTodo = async () => {
-    if (inputValue.length === 0) {
-      return;
-    }
-    try {
-      const data = await createTodo({
-        title: inputValue,
-        isDone: false,
-      });
-      setTodos((prevTodos) => {
-        return [
-          ...prevTodos,
-          {
-            id: data.id,
-            title: data.title,
-            isDone: data.isDone,
-            isEdit: false,
-          },
-        ]
-      }); 
-      setInputValue('');
-    } catch (error) {
-      console.error(error);
-    }
+    await dispatch(saveNewTodo({
+      title: inputValue,
+      isDone: false,
+    }));
     setInputValue('');
   }
   const handleKeyDown = () => {
-    if (inputValue.length === 0) {
-      return;
-    }
-    setTodos((prevTodos) => {
-      return [
-        ...prevTodos,
-        {
-          id: Math.random() * 100,
-          title: inputValue,
-          isDone: false,
-        },
-      ];
-    });
-    setInputValue('');
+    console.log('handleKeyDown');
+    // if (inputValue.length === 0) {
+    //   return;
+    // }
+    // setTodos((prevTodos) => {
+    //   return [
+    //     ...prevTodos,
+    //     {
+    //       id: Math.random() * 100,
+    //       title: inputValue,
+    //       isDone: false,
+    //     },
+    //   ];
+    // });
+    // setInputValue('');
   };
   const handleToggleDone = async (id) => {
-    const currentTodo = todos.find((todo) => todo.id === id);
-    try {
-      await patchTodo({
-        id,
-        isDone: !currentTodo.isDone,
-      });
-      setTodos((prevTodos) => {
-        return prevTodos.map((todo) => {
-          if (todo.id === id) {
-            return {
-              ...todo,
-              isDone: !todo.isDone,
-            };
-          }
-          return todo;
-        });
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    console.log('handleToggleDone', id);
+    // const currentTodo = todos.find((todo) => todo.id === id);
+    // try {
+    //   await patchTodo({
+    //     id,
+    //     isDone: !currentTodo.isDone,
+    //   });
+    //   setTodos((prevTodos) => {
+    //     return prevTodos.map((todo) => {
+    //       if (todo.id === id) {
+    //         return {
+    //           ...todo,
+    //           isDone: !todo.isDone,
+    //         };
+    //       }
+    //       return todo;
+    //     });
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   const handleChangeMode = ({ id, isEdit }) => {
-    setTodos((prevTodos) => {
-      return prevTodos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            isEdit,
-          };
-        }
-        return { ...todo, isEdit: false };
-      });
-    });
+    console.log('handleChangeMode', id);
+    console.log('handleChangeMode', isEdit);
+    // setTodos((prevTodos) => {
+    //   return prevTodos.map((todo) => {
+    //     if (todo.id === id) {
+    //       return {
+    //         ...todo,
+    //         isEdit,
+    //       };
+    //     }
+    //     return { ...todo, isEdit: false };
+    //   });
+    // });
   };
   const handleSave = async ({ id, title }) => {
-    try {
-      await patchTodo({
-        id,
-        title,
-      });
-      setTodos((prevTodos) => {
-        return prevTodos.map((todo) => {
-          if (todo.id === id) {
-            return { ...todo, title, isEdit: false };
-          }
-          return todo;
-        });
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    console.log('handleSave', id);
+    console.log('handleSave', title);
+    // try {
+    //   await patchTodo({
+    //     id,
+    //     title,
+    //   });
+    //   setTodos((prevTodos) => {
+    //     return prevTodos.map((todo) => {
+    //       if (todo.id === id) {
+    //         return { ...todo, title, isEdit: false };
+    //       }
+    //       return todo;
+    //     });
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   const handleDelete = async (id) => {
-    try {
-      await deleteTodo(id);
-      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-    } catch (error) {
-      console.error(error);
-    }
+    // console.log('handleDelete', id);
+    // try {
+    //   await deleteTodo(id);
+    //   // setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
-  useEffect(() => {
-    const getTodosAsync = async () => {
-      try {
-        const todos = await getTodos();
-        setTodos(todos.map((todo) => ({ ...todo, isEdit: false })));
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getTodosAsync();
-  }, []);
   return (
     <div>
       TodoPage
@@ -153,7 +131,7 @@ const TodoPage = () => {
         onChangeMode={handleChangeMode}
         onDelete={handleDelete}
       />
-      <Footer numOfTodos={todos.length} />
+      <Footer numOfTodos={todos?.length} />
     </div>
   );
 };

@@ -40,8 +40,8 @@ const Footer = ({ numOfTodos, }) => {
   };
   return (
     <StyledFooter>
-      <p>剩餘項目數： {numOfTodos}</p>
-      <StyledButton onClick={handleClick}>登出</StyledButton>
+      <p>剩餘項目數： {numOfTodos} </p>
+      <StyledButton onClick={handleClick}> 登出 </StyledButton>
     </StyledFooter>
   );
 };
