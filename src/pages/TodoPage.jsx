@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { 
   fetchTodos,
   saveNewTodo,
+  updateTodo,
+  removeTodo,
   selectTodoList,
+  todoEditMode,
 } from "../store/todosSlice";
 
 const TodoPage = () => {
@@ -12,6 +15,7 @@ const TodoPage = () => {
     name: 'test',
   }
   const [inputValue, setInputValue] = useState('');
+  
   const todos = useSelector(selectTodoList);
   const dispatch = useDispatch();
 
@@ -29,90 +33,35 @@ const TodoPage = () => {
       isDone: false,
     }));
     setInputValue('');
-  }
-  const handleKeyDown = () => {
-    console.log('handleKeyDown');
-    // if (inputValue.length === 0) {
-    //   return;
-    // }
-    // setTodos((prevTodos) => {
-    //   return [
-    //     ...prevTodos,
-    //     {
-    //       id: Math.random() * 100,
-    //       title: inputValue,
-    //       isDone: false,
-    //     },
-    //   ];
-    // });
-    // setInputValue('');
+  };
+
+  const handleKeyDown = async () => {
+    await dispatch(saveNewTodo({
+      title: inputValue,
+      isDone: false,
+    }));
+    setInputValue('');
   };
   const handleToggleDone = async (id) => {
-    console.log('handleToggleDone', id);
-    // const currentTodo = todos.find((todo) => todo.id === id);
-    // try {
-    //   await patchTodo({
-    //     id,
-    //     isDone: !currentTodo.isDone,
-    //   });
-    //   setTodos((prevTodos) => {
-    //     return prevTodos.map((todo) => {
-    //       if (todo.id === id) {
-    //         return {
-    //           ...todo,
-    //           isDone: !todo.isDone,
-    //         };
-    //       }
-    //       return todo;
-    //     });
-    //   });
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    const currentTodo = todos.find((todo) => todo.id === id);
+    await dispatch(updateTodo({
+      ...currentTodo,
+      isDone: !currentTodo.isDone,
+    }));
   };
-  const handleChangeMode = ({ id, isEdit }) => {
-    console.log('handleChangeMode', id);
-    console.log('handleChangeMode', isEdit);
-    // setTodos((prevTodos) => {
-    //   return prevTodos.map((todo) => {
-    //     if (todo.id === id) {
-    //       return {
-    //         ...todo,
-    //         isEdit,
-    //       };
-    //     }
-    //     return { ...todo, isEdit: false };
-    //   });
-    // });
+  const handleChangeMode = ({ id }) => {
+    dispatch(todoEditMode({
+      id,
+    }));
   };
   const handleSave = async ({ id, title }) => {
-    console.log('handleSave', id);
-    console.log('handleSave', title);
-    // try {
-    //   await patchTodo({
-    //     id,
-    //     title,
-    //   });
-    //   setTodos((prevTodos) => {
-    //     return prevTodos.map((todo) => {
-    //       if (todo.id === id) {
-    //         return { ...todo, title, isEdit: false };
-    //       }
-    //       return todo;
-    //     });
-    //   });
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    await dispatch(updateTodo({
+      id,
+      title,
+    }));
   };
   const handleDelete = async (id) => {
-    // console.log('handleDelete', id);
-    // try {
-    //   await deleteTodo(id);
-    //   // setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    await dispatch(removeTodo(id));
   };
   return (
     <div>
