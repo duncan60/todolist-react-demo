@@ -8,32 +8,37 @@ import { ACLogoIcon } from 'assets/images';
 import { AuthInput } from 'components';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useSelector, useDispatch } from "react-redux";
+import { 
+  authLogin,
+  selectAuth,
+} from "../store/authSlice";
 
 const LoginPage = () => {
-  const { login, isAuthenticated } = useAuth();
+
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+
+  const auth = useSelector(selectAuth);
+  console.log('[LoginPage] auth:', auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    console.log('[LoginPage] useEffect auth:', auth);
+    if (auth?.token.length) {
       navigate('/todos');
     }
-  }, [navigate, isAuthenticated]);
+  }, [navigate, dispatch, auth]);
 
   const handleClick = async () => {
-    if (userName.length === 0 || password.length === 0) {
+    if (!userName.length|| !password.length) {
       return;
     }
-    const success = await login({
+    await dispatch(authLogin({
       username: userName,
       password: password,
-    });
-    if (success) {
-      navigate('/todos');
-      return;
-    }
+    }));
   };
 
   return (

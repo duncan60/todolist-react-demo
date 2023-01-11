@@ -112,7 +112,7 @@ export const {
 // Selector function
 export const selectTodoList = createSelector(
 	selectTodos,
-	(state) => {
-		return state;
+	(todos) => {
+		return todos;
 	},
 );

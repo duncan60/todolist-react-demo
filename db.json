@@ -22,7 +22,7 @@
     },
     {
       "title": "kkk 111111",
-      "isDone": false,
+      "isDone": true,
       "id": 6
     },
     {
@@ -39,6 +39,25 @@
       "title": "testing 3",
       "isDone": false,
       "id": 10
+    },
+    {
+      "title": "1234",
+      "isDone": false,
+      "id": 11
     }
-  ]
+  ],
+  "login": {
+    "username": "dddddd",
+    "password": "1111"
+  },
+  "register": {
+    "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+    "user": {
+      "id": "123",
+      "name": "duncan"
+    }
+  },
+  "test-token": {
+    "success": true
+  }
 }

@@ -9,19 +9,21 @@ import {
   selectTodoList,
   todoEditMode,
 } from "../store/todosSlice";
+import { 
+  selectAuthUser,
+} from "../store/authSlice";
 
 const TodoPage = () => {
-  const currentMember = {
-    name: 'test',
-  }
+  console.log('[TodoPage] render');
   const [inputValue, setInputValue] = useState('');
-  
+
   const todos = useSelector(selectTodoList);
+  const authUser = useSelector(selectAuthUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchTodos());
-  }, [dispatch]);
+  }, []);
 
   const handleInput = (value) => {
     setInputValue(value);
@@ -49,24 +51,28 @@ const TodoPage = () => {
       isDone: !currentTodo.isDone,
     }));
   };
+
   const handleChangeMode = ({ id }) => {
     dispatch(todoEditMode({
       id,
     }));
   };
+
   const handleSave = async ({ id, title }) => {
     await dispatch(updateTodo({
       id,
       title,
     }));
   };
+
   const handleDelete = async (id) => {
     await dispatch(removeTodo(id));
   };
+  
   return (
     <div>
       TodoPage
-      <Header username={currentMember?.name} />
+      <Header username={authUser?.name} />
       <TodoInput
         inputValue={inputValue}
         onChange={handleInput}

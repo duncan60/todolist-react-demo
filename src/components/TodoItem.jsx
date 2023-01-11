@@ -120,7 +120,6 @@ const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode, }) => {
         <span 
           className="icon icon-checked"
           onClick={() => {
-            console.log(todo);
             onToggleDone?.(todo.id);
           }}
         />

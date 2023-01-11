@@ -3,28 +3,21 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { HomePage, LoginPage, SignUpPage, TodoPage, ErrorPage  } from './pages';
+import { HomePage, LoginPage, TodoPage, ErrorPage  } from './pages';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "login",
-        element: <LoginPage />,
-      },
-      {
-        path: "signup",
-        element: <SignUpPage />,
-      },
-      {
-        index: true,
-        path: "todos",
-        element: <TodoPage />,
-      },
-    ]
+  },
+  {
+    path: "login",
+    element: <LoginPage />,
+  },
+  {
+    path: "todos",
+    element: <TodoPage />,
   },
 ]);
 
