@@ -13,7 +13,7 @@ import {
 
 const todosAdapter = createEntityAdapter()
 
-const initialState = todosAdapter.getInitialState({
+export const initialState = todosAdapter.getInitialState({
 	status: 'idle',
 });
 
@@ -95,7 +95,6 @@ const todosSlice = createSlice({
 			})
 	}
 });
-
 export const { 
 	todoEditMode,
 } = todosSlice.actions;

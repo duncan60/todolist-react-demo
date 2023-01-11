@@ -14,7 +14,6 @@ import {
 } from "../store/authSlice";
 
 const TodoPage = () => {
-  console.log('[TodoPage] render');
   const [inputValue, setInputValue] = useState('');
 
   const todos = useSelector(selectTodoList);
@@ -23,7 +22,7 @@ const TodoPage = () => {
 
   useEffect(() => {
     dispatch(fetchTodos());
-  }, []);
+  }, [dispatch]);
 
   const handleInput = (value) => {
     setInputValue(value);
