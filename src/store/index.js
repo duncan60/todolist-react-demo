@@ -3,8 +3,8 @@ import todosReducer from './todosSlice';
 import authReducer from './authSlice';
 
 export default configureStore({
-    reducer: {
-      auth: authReducer,
-      todos: todosReducer,
-    }
-  })
+  reducer: {
+    auth: authReducer,
+    todos: todosReducer,
+  }
+})
