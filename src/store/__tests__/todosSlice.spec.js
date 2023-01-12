@@ -28,10 +28,10 @@ beforeEach(() => {
 });
 
 describe("tests for todoSlice reducers", () => {
-  test("initialize slice with initialValue", () => {
-    const todoSliceInit = todosSlice(initialState, { type: "unknown" });
-    expect(todoSliceInit).toBe(initialState);
-  });
+ test("initialize slice with initialValue", () => {
+		const todoSliceInit = todosSlice(initialState, { type: "unknown" });
+		expect(todoSliceInit).toBe(initialState);
+	});
 	test('todoEditMode', () => {
 		const equalState = {
 			ids: [1, 2], 
@@ -50,14 +50,14 @@ describe("tests for todoSlice reducers", () => {
 			status: 'idle' 
 		};
 		const afterReducerCase1 = todosSlice(
-      initTestState,
-      todoEditMode({id: 2})
-    );
+				initTestState,
+				todoEditMode({id: 2})
+		);
 		expect(afterReducerCase1).toEqual(equalState);
 
 		const afterReducerCase2 = todosSlice(
-      initTestState,
-      todoEditMode({id: 3})
+				initTestState,
+				todoEditMode({id: 3})
     );
 		expect(afterReducerCase2).toEqual(initTestState);
 	});
@@ -70,8 +70,8 @@ describe("tests for todoSlice extraReducers", () => {
 			status: 'loading' 
 		}
 		const action = { type: saveNewTodo.pending.type };
-    const afterReducerCase = todosSlice(initTestState, action);
-    expect(afterReducerCase).toEqual(equalState);
+		const afterReducerCase = todosSlice(initTestState, action);
+		expect(afterReducerCase).toEqual(equalState);
 	});
 	test('saveNewTodo.fulfilled', () => {
 		const equalState = {
@@ -91,8 +91,8 @@ describe("tests for todoSlice extraReducers", () => {
 			title: 'title 3',
 			isEdit: false,
 		} };
-    const afterReducerCase = todosSlice(initTestState, action);
-    expect(afterReducerCase).toEqual(equalState);
+		const afterReducerCase = todosSlice(initTestState, action);
+		expect(afterReducerCase).toEqual(equalState);
 	});
 	test('updateTodo.fulfilled', () => {
 		const equalState = {
@@ -111,8 +111,8 @@ describe("tests for todoSlice extraReducers", () => {
 			id: 1,
 			title: 'testing update',
 		} };
-    const afterReducerCase = todosSlice(initTestState, action);
-    expect(afterReducerCase).toEqual(equalState);
+		const afterReducerCase = todosSlice(initTestState, action);
+		expect(afterReducerCase).toEqual(equalState);
 	});
 	test('updateTodo.removeTodo', () => {
 		const equalState = {
@@ -127,7 +127,7 @@ describe("tests for todoSlice extraReducers", () => {
 			}, 
 		}
 		const action = { type: removeTodo.fulfilled.type, payload: {id: 1,} };
-    const afterReducerCase = todosSlice(initTestState, action);
-    expect(afterReducerCase).toEqual(equalState);
+		const afterReducerCase = todosSlice(initTestState, action);
+		expect(afterReducerCase).toEqual(equalState);
 	});
 });
