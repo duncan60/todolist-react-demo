@@ -65,7 +65,9 @@ const TodoPage = () => {
   };
 
   const handleDelete = async (id) => {
-    await dispatch(removeTodo(id));
+    await dispatch(removeTodo({
+      id,
+    }));
   };
   
   return (

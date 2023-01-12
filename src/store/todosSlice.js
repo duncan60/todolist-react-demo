@@ -90,7 +90,7 @@ const todosSlice = createSlice({
 				state.status = 'loading';
 			})
 			.addCase(removeTodo.fulfilled, (state, action) => {
-				todosAdapter.removeOne(state, action.payload);
+				todosAdapter.removeOne(state, action.payload.id);
 				state.status = 'idle';
 			})
 	}
