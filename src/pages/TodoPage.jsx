@@ -8,10 +8,10 @@ import {
   removeTodo,
   selectTodoList,
   todoEditMode,
-} from "../store/todosSlice";
+} from "store/todosSlice";
 import { 
   selectAuthUser,
-} from "../store/authSlice";
+} from "store/authSlice";
 
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
